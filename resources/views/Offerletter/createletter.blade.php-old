@@ -1,0 +1,451 @@
+@extends('layouts.hrmLayout')
+@section('content')
+<div class="container-fluid"> 
+  
+  <!-- /.panel-body -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.js"></script>
+  <link href="https://api.spotserve.io/css/bootstrap-select.min.css" rel="stylesheet">
+  <style>
+input[type=text], select, textarea, input[type=email] {
+    width: 100%;
+    padding: 8px;
+border: 2px solid #059ec7;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: vertical;
+}
+	.input-group-addon{background: transparent;
+    position: absolute;
+    width: 100%;
+    height: 58%;
+    border: none;
+    z-index: 999999;
+    top: 26px;}
+	.input-group.date{    margin: 0;
+    width: 100%;}
+	.panel-body {
+    min-height: auto;
+}
+	.panel-default{    float: left;
+    width: 100%;}
+.marked-sandwich, .marked-present, .marked-leave, .not-marked, .marked-holiday, .marked-late{font-weight: bold;margin: 0 auto;display: block;text-align: center;}
+	.marked-late{    background: brown;
+    color: #fff;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    padding: 6px;}
+.marked-sandwich{background: red;
+    color: #fff;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    padding: 6px;}
+.marked-present{ background: forestgreen;
+    color: #fff;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    padding: 6px;}
+.marked-leave{ color: #a94442;white-space: nowrap;
+    display: inline;
+}
+.not-marked{ color: black;}
+.marked-holiday{background: blue;
+    color: #fff;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    padding: 6px;}	
+	#errorPopup .modal-header{    padding: 5px;    background: red;}
+		  #errorPopup .modal-header i{ 
+    color: #fff;
+
+    font-size: 20px;
+float: left;
+    padding: 8px 15px;}
+	  #errorPopup .modal-title{
+    font-weight: bold;
+    font-size: 25px;color: #fff;}
+	  #errorPopup #errorTxt{    text-align: center;
+    font-size: 21px;
+    margin-top: 5px; margin-bottom: 5px;}
+	#errorPopup .modal-content{    overflow: hidden;}
+	  #errorPopup .modal-footer{text-align: center;}
+	  #errorPopup button{width: 150px;
+    border-radius: 50px;
+    padding: 7px;
+    font-size: 18px;
+    background: #006985;
+    border: none;    color: #daf6ff;}
+	#errorPopup .modal-body{    padding: 5px;}
+	  #errorPopup button:hover{color: #fff; border: none;}
+	.d-md-flex {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+}		
+td{    vertical-align: middle !important;}
+.marked-leave .red, .marked-leave .blue, .marked-leave .green, .marked-leave .orange{width: 15px;
+    height: 15px;
+    display: inline-block;
+    border-radius: 50%;
+    position: relative;
+    top: 1px;}
+.marked-leave .red{    background: red;}
+.marked-leave .blue{    background: blue;}
+.marked-leave .green{    background: green;}
+.marked-leave .orange{    background: orange;}
+	.panel-body {
+    overflow: visible;
+}
+	.bootstrap-select .btn:focus{    outline: none !important;background-color: #ffffff;}
+	.form-control .selectpicker {    width: 100%;
+    padding: 8px;
+    border: 2px solid #059ec7;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: vertical;}
+	.form-control .selectpicker:hover{background-color: #ffffff;}
+	#example_wrapper .col-sm-12{    overflow-x: scroll;
+  }
+
+	table.dataTable thead .sorting:after{display: none;}
+	table.dataTable thead>tr>th.sorting{    padding-right: 8px;white-space: nowrap;}
+	table.dataTable thead .sorting, table.dataTable thead .sorting_asc, table.dataTable thead .sorting_desc, table.dataTable thead .sorting_asc_disabled, table.dataTable thead .sorting_desc_disabled {
+    color: #fff;
+    background-color: #212529;
+    border-color: #32383e;
+}
+	table.table-bordered.dataTable th, table.table-bordered.dataTable td {
+    padding: 15px 8px;
+}
+	.leave-approve a {    text-align: center;
+    margin: 0 auto;
+    background: green;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 50px;}
+	.leave-approve a:hover{text-decoration: none;}
+
+	.dinamic{font-size: 20px;color: #000;}
+	.button-design{    padding: 0;
+    list-style: none;
+    display: block;
+    text-align: right;}
+	.button-design li{    display: inline-block;
+    margin: 0 10px;}
+	.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+	.btn-primary:hover, .btn-primary:focus {
+    color: #fff;
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+	.btn-dark {
+    color: #fff;
+    background-color: #343a40;
+    border-color: #343a40;
+}
+	.btn-dark:hover, .btn-dark:focus {
+    color: #fff;
+    background-color: #23272b;
+    border-color: #1d2124;
+}
+	.btn-info {
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+	.btn-info:hover, .btn-info:focus {
+    color: #fff;
+    background-color: #138496;
+    border-color: #117a8b;
+}
+	.form-group label {    background: #fff;
+    position: relative;
+    top: 13px;
+    right: -8px;
+    padding: 0px 13px;    z-index: 99;}
+	#example_wrapper svg{    width: 30px;
+    height: 30px;}
+	#example_wrapper svg g{    fill: red;}
+			.dropdown-menu {
+    z-index: 99 !important;
+}
+	#emp_txt span{    position: absolute;
+    white-space: nowrap;
+    right: -133px;
+    top: 34px; z-index: 9;}
+	#emp_txt span a{color: red;
+    font-weight: bold;
+    text-decoration: underline;   }
+	.viewer{    border-bottom: 1px solid #ddd;
+    margin-bottom: 15px;}
+	.viewer ul{    list-style: none;
+    padding: 0;
+    display: block;
+    text-align: center;}
+	.viewer ul li{    display: inline-block;
+    padding: 0 14px;
+    font-weight: bold;
+    border-right: 1px solid #ddd;}
+	.viewer ul li:last-child{border-right: none;}
+		@media  only screen and (max-width: 600px) {
+.panel-body {
+    min-height: 442px;
+}
+			.viewer ul{    text-align: left;}
+			.viewer ul li{    width: 49%;
+    margin: 10px 0;
+    font-size: 12px;}
+		div.dataTables_wrapper div.dataTables_length label{    width: 100%;}
+		div.dataTables_wrapper div.dataTables_filter{    text-align: left;}
+			.button-design li{display: block;}
+}
+</style>
+	<br>
+  <div class="panel panel-default">
+    <div class="panel-heading"> Offer Letter Generation Panel </div>
+    <div class="panel-body">
+      <form action="https://www.hr-suranigroup.com/exportAttendance" id="exportattendancefrm" method="post">
+	  
+<form action="{{ url('generateOfferLetterPost') }}" id="offerletterId" name="offerLetterData" method="post" enctype="multipart/form-data">
+
+	@csrf
+     
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="col-sm-4 form-group">
+              <label for="exampleInputEmail1">Joining Date</label>
+              <input type="text" id="joining_date" name="offerLetterData[joining_date]" placeholder="Choose Joining Date" style="cursor: pointer;"   autocomplete="off">
+            </div>
+            <div class="form-group col-md-4">
+              <label>Enter Employee Name </label>
+              <input type="text" id="emp_name" name="offerLetterData[emp_name]" placeholder="Enter Employee Name " autocomplete="off">
+            </div>
+            <div class="form-group col-md-4">
+              <label>Passport No</label>
+              <input type="text" placeholder="Enter Passport No" id="passport_no" name="offerLetterData[passport_no]" autocomplete="off">
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="form-group col-md-4">
+              <label>Mobile No</label>
+              <input type="text" placeholder="Enter Mobile No"  id="mobile_no" name="offerLetterData[mobile_no]" autocomplete="off">
+            </div>
+            <div class="form-group col-md-4">
+              <label>Email id</label>
+              <input type="email" placeholder="Enter Email id" id="email" name="offerLetterData[email]" autocomplete="off">
+            </div>
+            <div class="form-group col-md-4">
+              <label>Select Designation</label>
+              <select class="selectpicker form-control" data-live-search="true" style="display: none;">
+                <option value="">Select Designation</option>
+                <option value="38">Graphics Designer</option>
+                <option value="37">Human Resources</option>
+
+              </select>
+              <div class="btn-group bootstrap-select form-control">
+                <button type="button" class="btn dropdown-toggle selectpicker btn-default" data-toggle="dropdown" data-id="dept_id" title="Select Department" aria-expanded="false"><span class="filter-option pull-left">Select Designation</span>&nbsp;<span class="caret"></span></button>
+                <div class="dropdown-menu open" style="max-height: 184px; overflow: hidden; min-height: 184.557px;">
+                  <div class="bs-searchbox">
+                    <input type="text" class="input-block-level form-control" autocomplete="off">
+                  </div>
+                  <ul class="dropdown-menu inner selectpicker" role="menu" style="max-height: 130px; overflow-y: auto; min-height: 130.557px;">
+                    <li data-original-index="0" class="selected active"><a tabindex="0" class="" data-normalized-text="<span class=&quot;text&quot;>Select Department</span>"><span class="text">Select Department</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                    <li data-original-index="1"><a tabindex="0" class="" data-normalized-text="<span class=&quot;text&quot;>Finance</span>"><span class="text">Graphics Designer</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                    <li data-original-index="2"><a tabindex="0" class="" data-normalized-text="<span class=&quot;text&quot;>Human Resources</span>"><span class="text">Human Resources</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12">
+			<div class="form-group col-md-4">
+              <label>Select Product</label>
+              <select class="selectpicker form-control" data-live-search="true" style="display: none;">
+                <option value="">Select Product</option>
+                <option value="38">Product 1</option>
+                <option value="37">Product 2</option>
+
+              </select>
+              <div class="btn-group bootstrap-select form-control">
+                <button type="button" class="btn dropdown-toggle selectpicker btn-default" data-toggle="dropdown" data-id="dept_id" title="Select Department" aria-expanded="false"><span class="filter-option pull-left">Select Product</span>&nbsp;<span class="caret"></span></button>
+                <div class="dropdown-menu open" style="max-height: 184px; overflow: hidden; min-height: 184.557px;">
+                  <div class="bs-searchbox">
+                    <input type="text" class="input-block-level form-control" autocomplete="off">
+                  </div>
+                  <ul class="dropdown-menu inner selectpicker" role="menu" style="max-height: 130px; overflow-y: auto; min-height: 130.557px;">
+                    <li data-original-index="0" class="selected active"><a tabindex="0" class="" data-normalized-text="<span class=&quot;text&quot;>Select Department</span>"><span class="text">Select Product</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                    <li data-original-index="1"><a tabindex="0" class="" data-normalized-text="<span class=&quot;text&quot;>Finance</span>"><span class="text">Product 1</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                    <li data-original-index="2"><a tabindex="0" class="" data-normalized-text="<span class=&quot;text&quot;>Human Resources</span>"><span class="text">Product 2</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+			  <div class="form-group col-md-4">
+              <label>Select Department</label>
+              <select class="selectpicker form-control" data-live-search="true" style="display: none;">
+                <option value="">Select Department</option>
+                <option value="38">Department 1</option>
+                <option value="37">Department 2</option>
+
+              </select>
+              <div class="btn-group bootstrap-select form-control">
+                <button type="button" class="btn dropdown-toggle selectpicker btn-default" data-toggle="dropdown" data-id="dept_id" title="Select Department" aria-expanded="false"><span class="filter-option pull-left">Select Department</span>&nbsp;<span class="caret"></span></button>
+                <div class="dropdown-menu open" style="max-height: 184px; overflow: hidden; min-height: 184.557px;">
+                  <div class="bs-searchbox">
+                    <input type="text" class="input-block-level form-control" autocomplete="off">
+                  </div>
+                  <ul class="dropdown-menu inner selectpicker" role="menu" style="max-height: 130px; overflow-y: auto; min-height: 130.557px;">
+                    <li data-original-index="0" class="selected active"><a tabindex="0" class="" data-normalized-text="<span class=&quot;text&quot;>Select Department</span>"><span class="text">Select Department</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                    <li data-original-index="1"><a tabindex="0" class="" data-normalized-text="<span class=&quot;text&quot;>Finance</span>"><span class="text">Department 1</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>
+                    <li data-original-index="2"><a tabindex="0" class="" data-normalized-text="<span class=&quot;text&quot;>Human Resources</span>"><span class="text">Department 2</span><span class="glyphicon glyphicon-ok check-mark"></span></a></li>
+
+                  </ul>
+                </div>
+              </div>
+            </div>
+			<div class="form-group col-md-4" style="padding-right: 0;    margin-top: 22px;">  
+											
+												
+												<a class="btn btn-info" href="javascript:void(0);" role="button" style="    width: 57%;
+    padding: 8px 12px;
+    margin-top: 3px;
+    font-weight: bold;
+    float: right;
+    margin-right: 15px;" onclick="exportEMP();"><i class="fa fa-cog" aria-hidden="true" style="margin-right: 5px;"></i>Generate</a>
+											
+												
+												
+										</div>
+			</div>
+        </div>
+      </form>
+      
+      <!-- /.row --> 
+    </div>
+  </div>
+</div>
+<script>
+var FromEndDate = new Date();
+$("#selectAttendance_from").datepicker({
+			format: 'dd-mm-yyyy',
+			inline: false,
+			lang: 'en',
+			step: 5,
+			multidate: 1,
+			closeOnDateSelect: true,
+			daysOfWeekDisabled: [0],
+			 todayHighlight: true,
+			 endDate: FromEndDate,
+			 autoclose:true
+	
+});
+
+
+$("#selectAttendance_to").datepicker({
+			format: 'dd-mm-yyyy',
+			inline: false,
+			lang: 'en',
+			step: 5,
+			multidate: 1,
+			closeOnDateSelect: true,
+			daysOfWeekDisabled: [0],
+			 todayHighlight: true,
+			 endDate: FromEndDate,
+			  autoclose:true
+	
+});
+			
+
+function searchStart()
+{
+	var selectAttendance_from = jQuery("#selectAttendance_from").val();
+	var selectAttendance_to = jQuery("#selectAttendance_to").val();
+	var deptId = jQuery("#dept_id").val();
+	
+	var selectfromNew = selectAttendance_from.split("-").reverse().join("-");
+	var selecttoNew = selectAttendance_to.split("-").reverse().join("-");
+	var selectfromSet = new Date(selectfromNew);
+	var selecttoSet = new Date(selecttoNew);
+	
+	if(selectAttendance_from == '')
+	{
+		jQuery("#errorTxt").html("Choose Attendance Date range to proceed.");
+		jQuery('#errorPopup').modal('show');
+	}
+	else if(selectAttendance_to == '')
+	{
+		jQuery("#errorTxt").html("Choose Attendance Date range to proceed.");
+		jQuery('#errorPopup').modal('show');
+	}
+	else if(deptId == '')
+	{
+		jQuery("#errorTxt").html("Please select department to proceed.");
+		jQuery('#errorPopup').modal('show');
+	}
+	else if(selectfromSet > selecttoSet)
+	{
+		jQuery("#errorTxt").html("Kindly Select proper date range.From date should be lesser than to date.");
+		
+		jQuery('#errorPopup').modal('show');
+	}
+	else
+	{
+		document.getElementById('attendanceapplied').submit();
+	}
+}
+
+function selectedALLEMP()
+{
+	if(jQuery("#mainCheckEMP").prop("checked"))
+	{
+		jQuery(".selectedEMP").prop("checked",true);
+	}
+	else
+	{
+		jQuery(".selectedEMP").prop("checked",false);
+	}
+}
+
+function exportEMP(){
+	
+        var selectedIds = [];
+        var is_chcked = $('.selectedEMP:checked').length;
+        //--------if checkbox is selected---------
+        if(is_chcked){
+            
+            $(".selectedEMP:checked").each(function(){
+               selectedIds.push($(this).val());
+            });
+			var selectfromexport = jQuery("#selectAttendance_from").val();
+			var selecttoexport = jQuery("#selectAttendance_to").val();
+			var dept_id = jQuery("#dept_id").val();
+			jQuery("#empids").val(selectedIds);
+			jQuery("#selectfromexport").val(selectfromexport);
+			jQuery("#selecttoexport").val(selecttoexport);
+			jQuery("#dept_idexport").val(dept_id);
+			document.getElementById("exportattendancefrm").submit();
+            //---------------------------
+          
+           
+        }
+        else{
+            
+            alert("please select row using checkbox");
+			
+            return false;
+        }
+    }
+</script> 
+@stop
